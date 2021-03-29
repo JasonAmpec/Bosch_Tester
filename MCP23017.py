@@ -21,3 +21,4 @@ while True:
   if MySwitch == 0b10000000:
    print ('Switch was pressed')
    time.sleep(1)
+#TEST 1
