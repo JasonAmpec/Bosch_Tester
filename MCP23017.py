@@ -22,3 +22,4 @@ while True:
    print ('Switch was pressed')
    time.sleep(1)
 #TEST 1
+#TEST 2
