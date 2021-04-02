@@ -1,16 +1,13 @@
 import smbus
 import time
+import MCP_lib
 import numpy as np
 
 f = open("results.txt","w")
 
-flag = 1
-x = 0
 y = 0
 B_string = 0
 arraysize = 0
-
-Output_adr = 0b00000001
 
 Learn = np.array([])
  
@@ -28,12 +25,7 @@ GPPUB = 0x0D
  
 # Set first 7 GPA pins as outputs and
 # last one as input.
-bus.write_byte_data(OUT_DEVICE,IODIRA,0x00)
-bus.write_byte_data(OUT_DEVICE,IODIRB,0x00)
-bus.write_byte_data(IN_DEVICE,IODIRA,0xff)
-bus.write_byte_data(IN_DEVICE,IODIRB,0xff)
-bus.write_byte_data(IN_DEVICE,GPPUA,0xff)
-bus.write_byte_data(IN_DEVICE,GPPUB,0xff)
+MCP_lib.init()
 
 print ("Start Test Sequence")
  
@@ -41,19 +33,7 @@ print ("Start Test Sequence")
 while True:
  
   # Read state of GPIOA register
-  while (x <= 7): 
-    bus.write_byte_data(OUT_DEVICE,GPIOA,Output_adr)
-    Output_adr = Output_adr << 1
-    x = x + 1
-
-    Data = bus.read_byte_data(IN_DEVICE,GPIOA)
-    B_string = np.binary_repr(Data, width = 8)
-    Learn = np.append(Learn,B_string)
-    #print("Output:",format(Output_adr >> 1, '#010b'),"Readout",format(Data, '#010b'))
-    time.sleep(0.01)
-
-  x = 0
-  Output_adr = 0b00000001
+  Learn = MCP_lib.scan()
 
   #print("results are:",Learn) 
   for z in Learn:
