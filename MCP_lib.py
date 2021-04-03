@@ -1,6 +1,7 @@
 import smbus
 import time
 import numpy as np
+from tkinter import*
 
 
 flag = 1
@@ -40,8 +41,8 @@ def scan():
         x = x + 1
 
         Data = bus.read_byte_data(IN_DEVICE,GPIOA)
-        B_string = np.binary_repr(Data, width = 8)   #convert to binary string
-        Learn = np.append(Learn,B_string)            #append into the array
+        #B_string = np.binary_repr(Data, width = 8)   #convert to binary string
+        Learn = np.append(Learn,Data)            #append into the array
         #print("Output:",format(Output_adr >> 1, '#010b'),"Readout",format(Data, '#010b'))
         
     return Learn
