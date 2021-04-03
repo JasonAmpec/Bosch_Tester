@@ -22,11 +22,11 @@ GPPUA = 0x0C
 GPPUB = 0x0D
 
 def init():
-    bus.write_byte_data(OUT_DEVICE,IODIRA,0x00)
+    bus.write_byte_data(OUT_DEVICE,IODIRA,0x00)   #all pins are output
     bus.write_byte_data(OUT_DEVICE,IODIRB,0x00)
-    bus.write_byte_data(IN_DEVICE,IODIRA,0xff)
+    bus.write_byte_data(IN_DEVICE,IODIRA,0xff)    #all pins are input 
     bus.write_byte_data(IN_DEVICE,IODIRB,0xff)
-    bus.write_byte_data(IN_DEVICE,GPPUA,0xff)
+    bus.write_byte_data(IN_DEVICE,GPPUA,0xff)     #Pullup resistor applied to all input
     bus.write_byte_data(IN_DEVICE,GPPUB,0xff)
 
 def scan():
@@ -35,12 +35,13 @@ def scan():
     Learn = np.array([])
     while (x <= 7): 
         bus.write_byte_data(OUT_DEVICE,GPIOA,Output_adr)
+        #Scan through output pin
         Output_adr = Output_adr << 1
         x = x + 1
 
         Data = bus.read_byte_data(IN_DEVICE,GPIOA)
-        B_string = np.binary_repr(Data, width = 8)
-        Learn = np.append(Learn,B_string)
+        B_string = np.binary_repr(Data, width = 8)   #convert to binary string
+        Learn = np.append(Learn,B_string)            #append into the array
         #print("Output:",format(Output_adr >> 1, '#010b'),"Readout",format(Data, '#010b'))
-        time.sleep(0.01)
+        
     return Learn
