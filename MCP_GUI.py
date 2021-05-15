@@ -37,13 +37,6 @@ def print_cable():
 def test_cable():
     global tested_cable
     tested_cable = MCP_lib.scan()
-    
-    print ("************tested cable************* ")
-    for data in tested_cable:
-        print(data)
-    print ("*********Learn**************")
-    for data in Learn:
-        print(data)
 
     if ((tested_cable == Learn).all()):
         Passed = tk.Label(root, image = Pass_img)
@@ -85,8 +78,6 @@ button_quit.grid(column = 2, row = 3, columnspan = 4)
 #f.close()
 #Learn = np.delete(Learn,1)
 
-  
-print("**************END***************")
 
 root.mainloop()
 
